@@ -1,1 +1,0 @@
-This is a test fileThe test program will read,This file and count the number of words in each line,And then report the final numbers.This is a test file to test on the cluster
