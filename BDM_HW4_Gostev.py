@@ -87,7 +87,7 @@ if __name__=='__main__':
             .map(lambda x: MedLowHigh(x)) \
             .filter(lambda x: x[0] > 2018) \
             .sortBy(lambda x: (x[0], x[1])) \
-            .saveAsTextFile('hdfs:///user/dgostev/test') 
+            .saveAsTextFile(sys.argv[2] if len(sys.argv)>2 else 'hdfs:///user/dgostev/test') 
 #         schema = StructType([ \
 #             StructField("year",StringType(),True), \
 #             StructField("date",StringType(),True), \
