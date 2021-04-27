@@ -99,4 +99,4 @@ if __name__=='__main__':
         spark = SparkSession.builder.getOrCreate()
         df = spark.createDataFrame(data=patterns,schema=schema)
 
-        df.write.option("header",True).partitionBy("type").mode("overwrite").csv("/test")
+        df.write.option("header",True).partitionBy("type").mode("overwrite").csv("test")
