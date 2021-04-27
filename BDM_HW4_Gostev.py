@@ -41,7 +41,7 @@ if __name__=='__main__':
 
     def addCategory(x):
         return(x[0], NAICS_dict[x[1]])
-
+    print('>>>> TEST START <<<<<<<')
     places = sc.textFile('hdfs:///data/share/bdm/core-places-nyc.csv') \
         .map(lambda x: x.split(',')) \
         .map(lambda x: (x[1], x[9])) \
@@ -76,7 +76,7 @@ if __name__=='__main__':
         project_date =  '2020-' + x[0][0][5:] 
         place_type = x[0][1] 
         return (real_year, project_date, int(median_vst), int(low_vst), int(high_vst), place_type)
-        print('>>>>>>>>>> I got so far 2 <<<<<<<<<<<<'
+        print('>>>>>>>>>> I got so far 2 <<<<<<<<<<<<')
         patterns = sc.textFile('hdfs:///data/share/bdm/weekly-patterns-nyc-2019-2020.csv') \
             .map(lambda x: next(csv.reader([x]))) \
             .filter(lambda x: x[1] in places_dict.keys()) \
