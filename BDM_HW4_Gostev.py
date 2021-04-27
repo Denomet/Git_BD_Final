@@ -87,16 +87,16 @@ if __name__=='__main__':
             .map(lambda x: MedLowHigh(x)) \
             .filter(lambda x: x[0] > 2018) \
             .sortBy(lambda x: (x[0], x[1])) \
-            .collect() 
-        schema = StructType([ \
-            StructField("year",StringType(),True), \
-            StructField("date",StringType(),True), \
-            StructField("median",IntegerType(),True), \
-            StructField("low", IntegerType(), True), \
-            StructField("high", IntegerType(), True), \
-            StructField("type", StringType(), True)])
+            .saveAsTextFile('hdfs:///user/dgostev/test') 
+#         schema = StructType([ \
+#             StructField("year",StringType(),True), \
+#             StructField("date",StringType(),True), \
+#             StructField("median",IntegerType(),True), \
+#             StructField("low", IntegerType(), True), \
+#             StructField("high", IntegerType(), True), \
+#             StructField("type", StringType(), True)])
 
-        spark = SparkSession.builder.getOrCreate()
-        df = spark.createDataFrame(data=patterns,schema=schema)
+#         spark = SparkSession.builder.getOrCreate()
+#         df = spark.createDataFrame(data=patterns,schema=schema)
 
-        df.write.option("header",True).partitionBy("type").mode("overwrite").csv("hdfs:///user/dgostev/test")
+#         df.write.option("header",True).partitionBy("type").mode("overwrite").csv("hdfs:///user/dgostev/test")
