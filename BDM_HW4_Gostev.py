@@ -77,27 +77,28 @@ if __name__=='__main__':
         place_type = x[0][1] 
         return (real_year, project_date, int(median_vst), int(low_vst), int(high_vst), place_type)
         print('>>>>>>>>>> I got so far 2 <<<<<<<<<<<<')
-        patterns = sc.textFile('hdfs:///data/share/bdm/weekly-patterns-nyc-2019-2020.csv') \
-            .map(lambda x: next(csv.reader([x]))) \
-            .filter(lambda x: x[1] in places_dict.keys()) \
-            .map(lambda x: (x[1], x[12], x[16] )) \
-            .flatMap(lambda x: convertKey(x)) \
-            .groupByKey() \
-            .map(lambda x: (x[0], list(x[1]) )) \
-            .map(lambda x: MedLowHigh(x)) \
-            .filter(lambda x: x[0] > 2018) \
-            .sortBy(lambda x: (x[0], x[1])) \
-            .saveAsTextFile(sys.argv[2] if len(sys.argv)>2 else 'hdfs:///user/dgostev/test') 
+    patterns = sc.textFile('hdfs:///data/share/bdm/weekly-patterns-nyc-2019-2020.csv') \
+        .map(lambda x: next(csv.reader([x]))) \
+        .filter(lambda x: x[1] in places_dict.keys()) \
+        .map(lambda x: (x[1], x[12], x[16] )) \
+        .flatMap(lambda x: convertKey(x)) \
+        .groupByKey() \
+        .map(lambda x: (x[0], list(x[1]) )) \
+        .map(lambda x: MedLowHigh(x)) \
+        .filter(lambda x: x[0] > 2018) \
+        .sortBy(lambda x: (x[0], x[1])) \
+        .collect()
+#         .saveAsTextFile(sys.argv[2] if len(sys.argv)>2 else 'hdfs:///user/dgostev/test') 
         print(' >>>>>>>> I GOT so FAR 3 <<<<<<<<<<<<<<<<<')
-#         schema = StructType([ \
-#             StructField("year",StringType(),True), \
-#             StructField("date",StringType(),True), \
-#             StructField("median",IntegerType(),True), \
-#             StructField("low", IntegerType(), True), \
-#             StructField("high", IntegerType(), True), \
-#             StructField("type", StringType(), True)])
+    schema = StructType([ \
+        StructField("year",StringType(),True), \
+        StructField("date",StringType(),True), \
+        StructField("median",IntegerType(),True), \
+        StructField("low", IntegerType(), True), \
+        StructField("high", IntegerType(), True), \
+        StructField("type", StringType(), True)])
 
-#         spark = SparkSession.builder.getOrCreate()
-#         df = spark.createDataFrame(data=patterns,schema=schema)
+    spark = SparkSession.builder.getOrCreate()
+    df = spark.createDataFrame(data=patterns,schema=schema)
 
-#         df.write.option("header",True).partitionBy("type").mode("overwrite").csv("hdfs:///user/dgostev/test")
+    df.write.option("header",True).partitionBy("type").mode("overwrite").csv("hdfs:///user/dgostev/test")
