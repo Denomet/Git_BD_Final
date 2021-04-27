@@ -89,7 +89,7 @@ if __name__=='__main__':
         .sortBy(lambda x: (x[0], x[1])) \
         .collect()
 #         .saveAsTextFile(sys.argv[2] if len(sys.argv)>2 else 'hdfs:///user/dgostev/test') 
-        print(' >>>>>>>> I GOT so FAR 3 <<<<<<<<<<<<<<<<<')
+    print(' >>>>>>>> I GOT so FAR 3 <<<<<<<<<<<<<<<<<')
     schema = StructType([ \
         StructField("year",StringType(),True), \
         StructField("date",StringType(),True), \
