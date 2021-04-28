@@ -100,4 +100,4 @@ if __name__=='__main__':
     spark = SparkSession.builder.getOrCreate()
     df = spark.createDataFrame(data=patterns,schema=schema)
 
-    df.write.option("header",True).partitionBy("type").mode("overwrite").csv(sys.argv[0] if len(sys.argv)>2 else  "hdfs:///user/dgostev/test")
+    df.write.option("header",False).partitionBy("type").mode("overwrite").csv(sys.argv[0] if len(sys.argv)>2 else  "hdfs:///user/dgostev/test")
