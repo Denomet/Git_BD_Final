@@ -85,9 +85,9 @@ if __name__=='__main__':
         .groupByKey() \
         .map(lambda x: (x[0], list(x[1]) )) \
         .map(lambda x: MedLowHigh(x)) \
-        .filter(lambda x: x[0] > 2018) \
-        .sortBy(lambda x: (x[0], x[1])) \
-        .collect()
+        .filter(lambda x: x[0] > 2018)
+#         .sortBy(lambda x: (x[0], x[1])) \
+#         .collect()
     
     schema = StructType([ \
         StructField("year",StringType(),True), \
@@ -100,4 +100,4 @@ if __name__=='__main__':
     spark = SparkSession.builder.getOrCreate()
     df = spark.createDataFrame(data=patterns,schema=schema)
 
-    df.write.option("header",False).partitionBy("type").mode("overwrite").csv(sys.argv[0] if len(sys.argv)>2 else  "hdfs:///user/dgostev/test")
+    df.write.option("header",False).partitionBy("type").mode("overwrite").csv(sys.argv[1] if len(sys.argv)>2 else  "hdfs:///user/dgostev/test")
