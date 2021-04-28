@@ -85,8 +85,8 @@ if __name__=='__main__':
         .groupByKey() \
         .map(lambda x: (x[0], list(x[1]) )) \
         .map(lambda x: MedLowHigh(x)) \
-        .filter(lambda x: x[0] > 2018)
-        .sortBy(lambda x: (x[0], x[1])) \
+        .filter(lambda x: x[0] > 2018) \
+        .sortBy(lambda x: (x[0], x[1]))
 #         .collect()
     
     schema = StructType([ \
