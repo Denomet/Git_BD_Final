@@ -77,7 +77,7 @@ if __name__=='__main__':
         place_type = x[0][1] 
         return (real_year, project_date, int(median_vst), int(low_vst), int(high_vst), place_type)
     
-    patterns = sc.textFile('hdfs:///data/share/bdm/weekly-patterns-nyc-2019-2020') \
+    patterns = sc.textFile('hdfs:///data/share/bdm/weekly-patterns-nyc-2019-2020/*') \
         .map(lambda x: next(csv.reader([x]))) \
         .filter(lambda x: x[1] in places_dict.keys()) \
         .map(lambda x: (x[1], x[12], x[16] )) \
@@ -99,4 +99,4 @@ if __name__=='__main__':
 
     spark = SparkSession.builder.getOrCreate()
     df = spark.createDataFrame(data=patterns,schema=schema)
-    df.write.option("header",False).partitionBy("type").mode("overwrite").csv(sys.argv[1] if len(sys.argv)>1 else  "hdfs:///user/dgostev/test")
+    df.write.option("header",True).partitionBy("type").mode("overwrite").csv(sys.argv[1] if len(sys.argv)>1 else  "hdfs:///user/dgostev/test")
