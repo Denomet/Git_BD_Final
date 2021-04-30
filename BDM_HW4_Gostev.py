@@ -99,9 +99,9 @@ if __name__=='__main__':
 
     spark = SparkSession.builder.getOrCreate()
     df = spark.createDataFrame(data=patterns,schema=schema)
-    df.write.option("header",True).partitionBy("type").mode("overwrite").csv(sys.argv[1] if len(sys.argv)>1 else  "test")
+    df.write.option("header",False).partitionBy("type").mode("overwrite").csv(sys.argv[1] if len(sys.argv)>1 else  "test")
     
-    header = [['year', 'date', 'median', 'low', 'high']]
+    header = (['year,date,median,low,high'])
     header_rdd = sc.parallelize(header)
     header_rdd.saveAsTextFile(sys.argv[1]+'/type=big_box_grocers/part-0.csv' if len(sys.argv)>1 else '/test/type=big_box_grocers/part-0.csv')
     header_rdd.saveAsTextFile(sys.argv[1]+'/type=convenience_stores/part-0.csv' if len(sys.argv)>1 else '/test/type=convenience_stores/part-0.csv')
