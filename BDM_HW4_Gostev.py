@@ -99,4 +99,16 @@ if __name__=='__main__':
 
     spark = SparkSession.builder.getOrCreate()
     df = spark.createDataFrame(data=patterns,schema=schema)
-    df.write.option("header",True).partitionBy("type").mode("overwrite").csv(sys.argv[1] if len(sys.argv)>1 else  "hdfs:///user/dgostev/test")
+    df.write.option("header",True).partitionBy("type").mode("overwrite").csv(sys.argv[1] if len(sys.argv)>1 else  "test")
+    
+    header = [['year', 'date', 'median', 'low', 'high']]
+    header_rdd = sc.parallelize(header)
+    header_rdd.saveAsTextFile('sys.argv[1]'+'/type=big_box_grocers/part-0' if len(sys.argv)>1 else '/test/type=big_box_grocers/part-0')
+    header_rdd.saveAsTextFile('sys.argv[1]'+'/type=convenience_stores/part-0' if len(sys.argv)>1 else '/test/type=convenience_stores/part-0')
+    header_rdd.saveAsTextFile('sys.argv[1]'+'/type=drinking_places/part-0' if len(sys.argv)>1 else '/test/type=drinking_places/part-0')
+    header_rdd.saveAsTextFile('sys.argv[1]'+'/type=full_service_restaurants/part-0' if len(sys.argv)>1 else '/test/type=full_service_restaurants/part-0')
+    header_rdd.saveAsTextFile('sys.argv[1]'+'/type=limited_service_restaurants/part-0' if len(sys.argv)>1 else '/test/type=limited_service_restaurants/part-0')
+    header_rdd.saveAsTextFile('sys.argv[1]'+'/type=pharmacies_and_drug_stores/part-0' if len(sys.argv)>1 else '/test/type=pharmacies_and_drug_stores/part-0')
+    header_rdd.saveAsTextFile('sys.argv[1]'+'/type=snack_and_bakeries/part-0' if len(sys.argv)>1 else '/test/type=snack_and_bakeries/part-0')
+    header_rdd.saveAsTextFile('sys.argv[1]'+'/type=specialty_food_stores/part-0' if len(sys.argv)>1 else '/test/type=specialty_food_stores/part-0')
+    header_rdd.saveAsTextFile('sys.argv[1]'+'/type=supermarkets_except_convenience_stores/part-0' if len(sys.argv)>1 else '/test/type=supermarkets_except_convenience_stores/part-0')
