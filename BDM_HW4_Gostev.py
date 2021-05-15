@@ -62,7 +62,7 @@ def main(sc):
     rddPlaces = sc.textFile('/data/share/bdm/core-places-nyc.csv')
     rddPattern = sc.textFile('/data/share/bdm/weekly-patterns-nyc-2019-2020/*')
     OUTPUT_PREFIX = sys.argv[1]
-    TO_BE_COMPLETED
+    
 # NAICS code lookup
 #===================
     CAT_CODES = {"452210", "452311", "445120", "722410", "722511", "722513", "446110", "446191", 
